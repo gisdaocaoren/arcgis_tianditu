@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Add WMTS Layer - Resource Info</title>
+
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #map {
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            bottom: 0px;
+            top: 0px;
+        }
+    </style>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.15/esri/css/esri.css">
+
+    <script>
+        var selfUrl = document.location.href.substring(0,document.location.href.lastIndexOf("/"));
+        var dojoConfig = { parseOnLoad: true,
+            mblHideAddressBar: false,
+            modulePaths: {"esrichina": selfUrl+"/js/esrichina" }
+        };
+    </script>
+    <script src="http://js.arcgis.com/3.15/"></script>
+
+    <script>
+        require([
+            "esrichina/TianDiTuLayer",
+            "esri/map", "esri/geometry/Extent",
+            "dojo/domReady!"
+        ], function(
+                TianDiTuLayer, Map, Extent
+        ) {
+            map = new Map("map",{extent:new Extent({"xmin":110,"ymin":20.29,"xmax":140,"ymax":46.36,"spatialReference":{"wkid":4326}})});
+            switchMap = function(type){
+                map && map.destroy();
+                map = new Map("map");
+                if(type == "VEC_GCS"){
+                    baseLayer = new TianDiTuLayer(TianDiTuLayer.VEC_BASE_GCS);
+                    annoLayer = new TianDiTuLayer(TianDiTuLayer.VEC_ANNO_GCS);
+                }else if(type == "VEC_MER"){
+                    baseLayer = new TianDiTuLayer(TianDiTuLayer.VEC_BASE_WEBMERCATOR);
+                    annoLayer = new TianDiTuLayer(TianDiTuLayer.VEC_ANNO_WEBMERCATOR);
+                }else if(type == "IMG_GCS"){
+                    baseLayer = new TianDiTuLayer(TianDiTuLayer.IMG_BASE_GCS);
+                    annoLayer = new TianDiTuLayer(TianDiTuLayer.IMG_ANNO_GCS);
+                }else if(type == "IMG_MER"){
+                    baseLayer = new TianDiTuLayer(TianDiTuLayer.IMG_BASE_WEBMERCATOR);
+                    annoLayer = new TianDiTuLayer(TianDiTuLayer.IMG_ANNO_WEBMERCATOR);
+                }else if(type == "TER_GCS"){
+                    baseLayer = new TianDiTuLayer(TianDiTuLayer.TER_BASE_GCS);
+                    annoLayer = new TianDiTuLayer(TianDiTuLayer.TER_ANNO_GCS);
+                }else if(type == "TER_MER"){
+                    baseLayer = new TianDiTuLayer(TianDiTuLayer.TER_BASE_WEBMERCATOR);
+                    annoLayer = new TianDiTuLayer(TianDiTuLayer.TER_ANNO_WEBMERCATOR);
+                }else {
+                    console.log("出错");
+                    return;
+                }
+
+                map.addLayer(baseLayer);
+                map.addLayer(annoLayer);
+            }
+            /**
+             * 天地图类型：TianDiTuLayer.XXXX，其中XXXX有以下值：
+             * VEC_BASE_GCS: 矢量底图(经纬度坐标系)
+             * VEC_ANNO_GCS: 矢量注记图层(经纬度坐标系)
+             * VEC_ANNO_GCS_EN: 矢量注记图层(经纬度坐标系)-英文注记
+
+             * VEC_BASE_WEBMERCATOR ：矢量底图(web墨卡托)
+             * VEC_ANNO_WEBMERCATOR： 矢量注记图层((web墨卡托)
+             * VEC_ANNO_WEBMERCATOR_EN： 矢量注记图层((web墨卡托)-英文注记
+             *
+             * IMG_BASE_GCS: 影像底图(经纬度坐标系)
+             * IMG_ANNO_GCS: 影像注记图层(经纬度坐标系)
+             * IMG_ANNO_GCS_EN: 影像注记图层(经纬度坐标系) -英文注记
+
+             * IMG_BASE_WEBMERCATOR ：影像底图(web墨卡托)
+             * IMG_ANNO_WEBMERCATOR： 影像注记图层((web墨卡托)
+             * IMG_ANNO_WEBMERCATOR_EN： 影像注记图层((web墨卡托)-英文注记
+             *
+             * TER_BASE_GCS: 地形底图(经纬度坐标系)
+             * TER_ANNO_GCS: 地形注记图层(经纬度坐标系)
+             * TER_BASE_WEBMERCATOR ：地形底图(web墨卡托)
+             * TER_ANNO_WEBMERCATOR： 地形注记图层((web墨卡托)
+             **/
+            var layer = new TianDiTuLayer(TianDiTuLayer.VEC_BASE_GCS);
+            var ano_layer = new TianDiTuLayer(TianDiTuLayer.VEC_ANNO_GCS);
+            map.addLayer(layer);
+            map.addLayer(ano_layer);
+
+        });
+    </script>
+</head>
+
+<body>
+<div id="map"></div>
+<div id="mapList" style="position: absolute;top: 10px;right: 20px;">
+    <input type="button" class="layerMenu" value="矢量(经纬度)" onclick="switchMap('VEC_GCS')"/>
+    <input type="button" class="layerMenu" value="矢量(墨卡托)" onclick="switchMap('VEC_MER')"/>
+    <input type="button" class="layerMenu" value="影像(经纬度)" onclick="switchMap('IMG_GCS')"/>
+    <input type="button" class="layerMenu" value="影像(墨卡托)" onclick="switchMap('IMG_MER')"/>
+    <input type="button" class="layerMenu" value="地形(经纬度)" onclick="switchMap('TER_GCS')"/>
+    <input type="button" class="layerMenu" value="地形(墨卡托)" onclick="switchMap('TER_MER')"/>
+</div>
+
+</body>
+</html>
