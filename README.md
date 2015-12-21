@@ -30,4 +30,6 @@ map.addLayer(ano_layer);
 * TER_BASE_WEBMERCATOR ：地形底图(web墨卡托)
 * TER_ANNO_WEBMERCATOR： 地形注记图层((web墨卡托)
              
-
+![image](https://raw.githubusercontent.com/gisdaocaoren/arcgis_tianditu/master/screenshots/1.png)
+![image](https://raw.githubusercontent.com/gisdaocaoren/arcgis_tianditu/master/screenshots/2.png)
+![image](https://raw.githubusercontent.com/gisdaocaoren/arcgis_tianditu/master/screenshots/3.png)
