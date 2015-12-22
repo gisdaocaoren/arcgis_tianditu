@@ -1,7 +1,7 @@
 # arcgis_tianditu
 一个基于ArcGIS JavaScript API的扩展包，可以加载不同类型，不同空间参考的天地图，并解决了直接扩展天地图产生的偏移问题
 
-添加方法：
+使用方法：
 var layer = new TianDiTuLayer(TianDiTuLayer.VEC_BASE_GCS);   //底图图层
 var ano_layer = new TianDiTuLayer(TianDiTuLayer.VEC_ANNO_GCS);   //中文注记图层
 map.addLayer(layer);
